@@ -4,29 +4,38 @@
 
 # Compiler
 CPP = g++
-# Compiler flags
-FLAGS = -std=c++20 -Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter -g
 
-# Directory with source code
-SRC_DIR = src
+# Compiler flags
+FLAGS = -std=c++20 -Wall -Wextra -Wpedantic -Werror -Wno-unused-parameter
+
+# Files with source code
+SRC_FILES = src/main.cpp \
+			src/file_handle/file_reader.cpp \
+			src/program/program_context.cpp src/program/client.cpp src/program/server.cpp 
+	
 # Directory with header files
 INC_DIR = inc
+
 # Directory for object files
 OBJ_DIR = obj
+
 # Binary file created after compilation
 PROG = secret
 
-# Get all .cpp files -> files with source code
-SRC = $(wildcard $(SRC_DIR)/*.cpp)
-# Create list of object files from source files
-OBJ = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC))
+# Derived object files from source files
+OBJ = $(patsubst src/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
-# Compilation 
+# Link the object files
 $(PROG): $(OBJ)
-	@$(CPP) $(FLAGS) -o $(PROG) $(OBJ)
- 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
-	@$(CPP) $(FLAGS) -c $< -o $@
+	@$(CPP) $(FLAGS) -I$(INC_DIR) $^ -o $@
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+# Compile the source files into object files
+$(OBJ_DIR)/%.o: src/%.cpp
+	@mkdir -p $(dir $@)
+	@$(CPP) $(FLAGS) -I$(INC_DIR) -c $< -o $@
+
+# Clean build artifacts
+clean:
+	@rm -rf $(OBJ_DIR) $(PROG)
+
+.PHONY: clean
