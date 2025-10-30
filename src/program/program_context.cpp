@@ -78,9 +78,11 @@ int ProgramContext::convertHostname(std::string hostname, std::variant<struct so
         throw std::runtime_error("Error: Parsed hostname cannot be found!");
     }
 
+    // Storages for converted addresses
     struct in_addr ipv4Storage;
     struct in6_addr ipv6Storage;
 
+    // Check if the provided hostname is ipv4 or ipv6 address
     if(inet_pton(AF_INET, hostname.c_str(), &ipv4Storage) == 1){
         struct sockaddr_in addr;
         memset(&addr, 0, sizeof(addr));
