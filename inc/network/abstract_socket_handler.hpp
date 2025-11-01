@@ -10,8 +10,6 @@
 #ifndef ABSTRACT_SOCKET_HANDLER_HPP
 #define ABSTRACT_SOCKET_HANDLER_HPP
 
-#define APP_PROTOCOL_PORT 50001
-
 #include <iostream>
 
 /**
