@@ -9,6 +9,7 @@
 #include <variant>
 #include <cstring>
 #include "../../inc/network/client_socket_handler.hpp"
+#include "../../inc/types/protocol_definitions.hpp"
 
 ClientSocketHandler::ClientSocketHandler(int type, std::variant<struct sockaddr_in, struct sockaddr_in6> destinationAddress) {
     // Initialize attributes of the class
@@ -37,16 +38,7 @@ ClientSocketHandler::ClientSocketHandler(int type, std::variant<struct sockaddr_
 
 
 void ClientSocketHandler::resolveSourceAddress(std::variant<struct sockaddr_in, struct sockaddr_in6> destinationAddress) {
-
-    // Setup filter for getaddrinfo
-    struct addrinfo searchFilter;
-    memset(&searchFilter, 0, sizeof(searchFilter));
-    searchFilter.ai_family = this->typeOfAddress;
-    searchFilter.ai_socktype = SOCK_DGRAM;
-
-    // Create storage for results
-    struct addrinfo *resultList = nullptr;
-    
+  
     // Open the socket for resolving best option for source address
     int resolveSocket = socket(this->typeOfAddress, SOCK_DGRAM, 0);
     if(resolveSocket < 0){
