@@ -6,6 +6,6 @@
  */
 #include <cstring>
 #include <openssl/sha.h>
-#include "abstract_cipher.hpp"
+#include "../../inc/cipher/abstract_cipher.hpp"
 
 AbstractCipher::AbstractCipher() { SHA256((const unsigned char*)LOGIN_KEY, LOGIN_KEY_SIZE, this->key);}

@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <string>
-#include "abstract_file_handler.hpp"
 #include "../types/struct_cipher.hpp"
 
 // Encryption/decryption key
