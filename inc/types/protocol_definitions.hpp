@@ -58,7 +58,7 @@ enum CLIENT_STATE{
 };
 
 /**
- * @enum PADDING_FLAGS
+ * @enum SERVER_STATE
  * @brief Enumeration of server states in the protocol. 
  */
 enum SERVER_STATE{
