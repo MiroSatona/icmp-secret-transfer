@@ -20,12 +20,12 @@
 
 /**
  * @struct CHIPHER_T
- * @brief Structure representing a cipher data with padding information.
+ * @brief Structure representing a data with padding information.
  */
 struct CHIPHER_T
 {
-    /// @brief The cipher data.
-    unsigned char cipherText[MAX_DATA_SIZE];
+    /// @brief The data.
+    unsigned char data[MAX_DATA_SIZE];
     /// @brief Flag indicating padding.
     bool padding;
     /// @brief Size of the padding.
