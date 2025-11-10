@@ -20,16 +20,12 @@
 
 /**
  * @struct CHIPHER_T
- * @brief Structure representing a data with padding information.
+ * @brief Structure representing a cipher data with initialization vector and total length.
  */
 struct CHIPHER_T
 {
     /// @brief The data.
     unsigned char data[MAX_DATA_SIZE];
-    /// @brief Flag indicating padding.
-    bool padding;
-    /// @brief Size of the padding.
-    int paddingSize;
     /// @brief Initialization vector used in encryption/decryption.
     unsigned char iv[AES_BLOCK_SIZE];
     /// @brief Total length of the cipher data.
