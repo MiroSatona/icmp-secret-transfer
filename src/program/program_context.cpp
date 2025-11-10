@@ -13,6 +13,7 @@
 #include <variant>
 #include "../../inc/program/abstract_program.hpp"
 #include "../../inc/program/program_context.hpp"
+#include "../../inc/program/client.hpp"
 
 ProgramContext::ProgramContext(int argCount, char **argsArray) : 
     program(nullptr), programArguments(argsArray), argumentCount(argCount), context(NOT_SET) {
@@ -39,15 +40,15 @@ void ProgramContext::getContext(){
         if(arg == "-l" && argumentCount == MIN_ARGUMENTS_COUNT){
             this->context = SERVER;
         }
-        // Client mode -> option -r for set the hostname of the server
-        else if(arg == "-r" && nextIndex < this->argumentCount && !file.empty()){
-            this->context = CLIENT;
-            file = std::string(this->programArguments[nextIndex]);
-        }
         // Client mode -> option -s for set the file which will be send to the server
-        else if(arg == "-s" && nextIndex < this->argumentCount && !hostname.empty()){
+        else if(arg == "-s" && nextIndex < this->argumentCount && hostname.empty()){
             this->context = CLIENT;
             hostname = std::string(this->programArguments[nextIndex]);
+        }
+        // Client mode -> option -r for set the hostname of the server
+        else if(arg == "-r" && nextIndex < this->argumentCount && file.empty()){
+            this->context = CLIENT;
+            file = std::string(this->programArguments[nextIndex]);
         }
         else{
             throw std::invalid_argument("Error: Invalid argument or argument was provided multiple times!");
@@ -59,11 +60,16 @@ void ProgramContext::getContext(){
 
     switch (this->context){
         case SERVER:{
-            //TBD
             break;
         }
         case CLIENT:{
-            //TBD
+            if(typeOfAddress == AF_INET){
+                struct sockaddr_in serverAddr = std::get<struct sockaddr_in>(ipvAddress);
+                this->program = std::make_unique<Client>(serverAddr, file, typeOfAddress);
+            } else if(typeOfAddress == AF_INET6){
+                struct sockaddr_in6 serverAddr = std::get<struct sockaddr_in6>(ipvAddress);
+                this->program = std::make_unique<Client>(serverAddr, file, typeOfAddress);
+            }
             break;
         }
         default:{ 
