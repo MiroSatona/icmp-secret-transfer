@@ -12,7 +12,7 @@
 #include <string>
 
 // Maximum bytes size of part what can be read from the file
-#define MAX_PART_SIZE_READ 1376
+#define MAX_PART_SIZE_READ 1392
 
 /**
  * @class AbstractFileHandler
@@ -39,21 +39,12 @@ class AbstractFileHandler{
          * @brief Virtual destructor of the AbstractFileHandler class.
          */
         virtual ~AbstractFileHandler() = default;
-        /** @brief Virtual method for reading data from the file.
-         * 
-         * @return unsigned char* Readed data from the file.
-         */
-        virtual unsigned char *read() = 0;
-        /**
-         * @brief Virtual method for writing data to the file.
-         */
-        virtual void  write() = 0;
         /**
          * @brief Setter for the file name.
          * 
          * @param name Name of the file.
          */
-        virtual void setFileName(std::string name) = 0;
+        void setFileName(std::string name);
         /**
          * @brief Virtual method for closing the file stream.
          */
