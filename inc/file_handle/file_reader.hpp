@@ -24,7 +24,7 @@ class FileReader: public AbstractFileHandler {
         std::ifstream fileStream;
     public:
         /**
-         * @brief Construct a new File Reader object
+         * @brief Constructor of new FileReader class.
          * 
          * @param filePath Path of the file which will be read. 
          */
@@ -36,7 +36,7 @@ class FileReader: public AbstractFileHandler {
          * 
          * @return unsigned char* Readed data from the file.
          */
-        unsigned char* read() override;
+        unsigned char* read();
         /**
          * @brief Method for closing the ifstream.
          */

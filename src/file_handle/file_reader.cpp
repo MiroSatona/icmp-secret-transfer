@@ -28,7 +28,7 @@ FileReader::FileReader(std::string filePath) : AbstractFileHandler() {
     }
 
     // Try to open the file for binary mode reading
-    this->fileStream.open(this->filePath, std::ios::binary);
+    this->fileStream.open(this->filePath, std::ios::in | std::ios::binary);
 
     // Check if the file can be read
     if (!this->fileStream.is_open()) {
