@@ -180,8 +180,8 @@ MESSAGE_TYPES MessageParser::parseMessage(unsigned char* packet, size_t packetSi
     }
     
     // Parse checksum of the payload
-    unsigned short receivedChecksumNet = 0;
-    memcpy(&receivedChecksumNet, &packet[parseIndex], CHECKSUM_PAYLOAD);
+    uint16_t receivedChecksumNet = 0;
+    memcpy(&receivedChecksumNet, &packet[parseIndex], sizeof(uint16_t));
     unsigned short receivedChecksum = ntohs(receivedChecksumNet);
 
     // Set payload index for calculate checksum
