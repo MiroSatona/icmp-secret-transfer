@@ -12,7 +12,7 @@
 #include <string>
 
 // Maximum bytes size of part what can be read from the file
-#define MAX_PART_SIZE_READ 1392
+#define MAX_PART_SIZE_READ 1376
 
 /**
  * @class AbstractFileHandler
