@@ -18,29 +18,28 @@
 
 
 // Constructor of the Encryptor class
-Encryptor::Encryptor() : InterfaceEncryptor() {}
+Encryptor::Encryptor() : AbstractCipher() {}
 
-CHIPHER_T Encryptor::encrypt(unsigned char *dataToEncrypt) {
-
-    // Prepate the CHIPHER_T struct for storing the result and metadata
+/**
+ * @note This implementation was inspired by the OpenSSL tutorial:
+ *       https://wiki.openssl.org/index.php/EVP_Symmetric_Encryption_and_Decryption
+ */
+CHIPHER_T Encryptor::encrypt(unsigned char *dataToEncrypt, size_t dataLength) {
+    // Prepare the CHIPHER_T struct for storing the result and metadata
     CHIPHER_T cipherResult;
     memset(&cipherResult, 0, sizeof(CHIPHER_T));
 
-    // Generate a random initialization vector and save him to the CHIPHER_T struct
+    // Generate a random initialization vector and save it to the CHIPHER_T struct
     unsigned char iv[AES_BLOCK_SIZE];
     memset(iv, 0, AES_BLOCK_SIZE);
-
-    if (!RAND_bytes(iv, AES_BLOCK_SIZE)){ 
-        throw std::runtime_error("IV generation failed");
+    if (!RAND_bytes(iv, AES_BLOCK_SIZE)){
+        throw std::runtime_error("Initialization vector generation failed");
     }
-
     memcpy(cipherResult.iv, iv, AES_BLOCK_SIZE);
 
     // Create a context for the encryption
     EVP_CIPHER_CTX *cipherContext;
-    memset(&cipherContext, 0, sizeof(cipherContext));
-
-    if(!(cipherContext = EVP_CIPHER_CTX_new())){ 
+    if(!(cipherContext = EVP_CIPHER_CTX_new())){
         throw std::runtime_error("Error: Context for encryption failed!");
     }
 
@@ -55,20 +54,16 @@ CHIPHER_T Encryptor::encrypt(unsigned char *dataToEncrypt) {
     memset(cipherData, 0, MAX_DATA_SIZE);
 
     // Length of the output cipher data
-    int outLengthCipher;
-    memset(&outLengthCipher, 0, sizeof(outLengthCipher));
+    int outLengthCipher = 0;
 
-    // Length of the input data
-    int inputLengthData = strlen((char*)dataToEncrypt);
-
-    if(EVP_EncryptUpdate(cipherContext, cipherData, &outLengthCipher, dataToEncrypt, inputLengthData) != 1) {
+    // Encrypt the input data
+    if(EVP_EncryptUpdate(cipherContext, cipherData, &outLengthCipher, dataToEncrypt, dataLength) != 1) {
         EVP_CIPHER_CTX_free(cipherContext);
         throw std::runtime_error("Error: Encryption update failed!");
     }
 
     // Length of final block
-    int finalBlockLength;
-    memset(&finalBlockLength, 0, sizeof(finalBlockLength));
+    int finalBlockLength = 0;
     // Encrypt the final block which will have padding
     if(EVP_EncryptFinal_ex(cipherContext, cipherData + outLengthCipher, &finalBlockLength) != 1) {
         EVP_CIPHER_CTX_free(cipherContext);

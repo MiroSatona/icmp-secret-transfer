@@ -17,7 +17,7 @@
  * @class Encryptor
  * @brief Class responsible for encrypting data using AES encryption.
  */
-class Encryptor : public InterfaceEncryptor {
+class Encryptor : public AbstractCipher {
     public:
         /**
          * @brief Constructor of Enryptor class.
@@ -26,10 +26,11 @@ class Encryptor : public InterfaceEncryptor {
         /**
          * @brief Method for encrypt the provided data.
          * @param dataToEncrypt Data which will be encrypted.
+         * @param dataLength Length of the data to be encrypted.
          * @throw std::runtime_error If any error was reached during the encryption.
          * @return CHIPHER_T struct  cipher data and metadata. See in inc/types/struct_cipher.hpp.
          */
-        CHIPHER_T encrypt(unsigned char *dataToEncrypt) override;
+        CHIPHER_T encrypt(unsigned char *dataToEncrypt, size_t dataLength);
 };
 
 #endif // ENCRYPTOR_HPP
