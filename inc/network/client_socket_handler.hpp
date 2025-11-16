@@ -33,7 +33,6 @@ class ClientSocketHandler : public AbstractSocketHandler {
          * @throw std::runtime_error If the socket cannot be opened or any internal error will become.
          */
         ClientSocketHandler(int type, std::variant<struct sockaddr_in, struct sockaddr_in6> destinationAddress);
-
         /**
          * @brief Method for closing the file descriptors of the sockets.
          */
@@ -51,6 +50,12 @@ class ClientSocketHandler : public AbstractSocketHandler {
          * @return  std::variant<struct sockaddr_in, struct sockaddr_in6> The variant containing resolved source address like sockaddr_in structure from <sys/socket.h> or sockaddr_in6 structure from <netinet/in.h>.
          */
         std::variant<struct sockaddr_in, struct sockaddr_in6> getSourceAddress();
+        /**
+         * @brief Getter for the file descriptor of the client socket.
+         * 
+         * @return int File descriptor of the client socket.
+         */
+        int getSocketDescriptor();
 };
 
 #endif // CLIENT_SOCKET_HANDLER_HPP
