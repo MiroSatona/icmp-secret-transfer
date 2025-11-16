@@ -28,8 +28,16 @@
 #define CHECKSUM_PAYLOAD 4
 // Length of data length in bytes
 #define DATA_LENGTH_SIZE 4
-// Length of payload of acknowledgment messages in bytes
-#define ACKNOWLEDGMENT_MESSAGES_PAYLOAD_LENGTH 4
+// Timeout for response in miliseconds
+#define RESPONSE_TIMEOUT 400
+// Timeout for waiting to server can interact with another in miliseconds
+#define WAIT_TIMEOUT 1500
+// Max count of retries
+#define MAX_RETREIES 3
+// Max count of authentication retries
+#define MAX_AUTH_RETRIES 3
+// Max time of not active communication between client and server in miliseconds 
+#define MAX_NOT_ACTIVE_TIME 5500
 
 /**
  * @enum MESSAGE_TYPES
@@ -43,8 +51,7 @@ enum MESSAGE_TYPES : uint16_t{
     DATA_ACK = 0x04,
     FIN = 0x06,
     FIN_ACK = 0x07,
-    ERR = 0x08,
-    WAIT = 0X09
+    FIN_ERR = 0x08
 };
 
 
@@ -56,7 +63,6 @@ enum CLIENT_STATE{
     AUTH_STATE,
     WAIT_STATE,
     SENDING_STATE,
-    CLIENT_ERROR_STATE,
     SERVER_ERROR_STATE,
     FIN_STATE
 };
@@ -67,8 +73,9 @@ enum CLIENT_STATE{
  */
 enum SERVER_STATE{
     LISTENING_STATE,
+    INITIALIZING_STATE,
     RECEIVING_STATE,
-    ERROR_STATE,
+    TERMINATE_SESSION_STATE,
     ENDING_STATE
 };
 
