@@ -26,6 +26,7 @@ ClientSocketHandler::ClientSocketHandler(int type, std::variant<struct sockaddr_
     // Resolve which type of socket will be opened
     if(this->typeOfAddress == AF_INET){ // Icmpv4 raw socket
         this->clientSocketDescriptor = socket(this->typeOfAddress, SOCK_RAW, IPPROTO_ICMP);
+        // Set option for recive and create own ipv4 header
         int option = 1;
         setsockopt(this->clientSocketDescriptor, IPPROTO_IP, IP_HDRINCL, &option, sizeof(option));
     }
