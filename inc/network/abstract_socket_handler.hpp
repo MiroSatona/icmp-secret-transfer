@@ -11,6 +11,11 @@
 #define ABSTRACT_SOCKET_HANDLER_HPP
 
 #include <iostream>
+#include <variant>
+#include <netinet/in.h>
+
+// Maximum receiving buffer size for recvfrom()
+#define MAX_BUFFER_SIZE 65535
 
 /**
  * @class AbstractSocketHandler
