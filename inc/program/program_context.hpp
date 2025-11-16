@@ -3,7 +3,7 @@
  * @author Martin Zůbek
  * @date 2025-09-26
  * @brief Header file with definition of ProgramContext class. This class is responsible for parsing cmd line arguments
- *        and decides wich class, for representing the program will be instantiated, Client or Server.
+ *        and decides wich class, for representing the program will be instantiated, Client or Server or Help.
  */ 
 
 #ifndef PROGRAM_CONTEXT_HPP
@@ -26,6 +26,7 @@
 enum Context{
     CLIENT,
     SERVER,
+    HELP,
     NOT_SET
 };
 
@@ -37,7 +38,7 @@ enum Context{
 class ProgramContext{
 
 private:
-    /// @brief The instance of the program, Client from the src/program/client.[cpp|hpp] or Server from the src/program/server.[cpp|hpp].
+    /// @brief The instance of the program, Client from the src/program/client.[cpp|hpp] or Server from the src/program/server.[cpp|hpp] or Help from the src/program/help.[cpp|hpp].
     std::unique_ptr<AbstractProgram> program;
     /// @brief Array of arguments wich was pasted in the cmd line.
     char **programArguments;

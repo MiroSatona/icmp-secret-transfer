@@ -2,7 +2,7 @@
  * @file program_context.cpp
  * @author Martin Zůbek
  * @date 2025-09-26
- * @brief Source file with implementation of ProgramContext class. This class is responsible for parsing cmd line arguments and decides wich class, for representing the program will be instantiated, Client or Server.
+ * @brief Source file with implementation of ProgramContext class. This class is responsible for parsing cmd line arguments and decides wich class, for representing the program will be instantiated, Client, Server or Help.
  */
 #include <iostream>
 #include <stdexcept>
@@ -11,9 +11,13 @@
 #include <cstring>
 #include <memory>
 #include <variant>
-#include "../../inc/program/abstract_program.hpp"
-#include "../../inc/program/program_context.hpp"
+#include "../../inc/program/help.hpp"
 #include "../../inc/program/client.hpp"
+#include "../../inc/program/server.hpp"
+#include "../../inc/program/program_context.hpp"
+#include "../../inc/program/abstract_program.hpp"
+
+
 
 ProgramContext::ProgramContext(int argCount, char **argsArray) : 
     program(nullptr), programArguments(argsArray), argumentCount(argCount), context(NOT_SET) {
@@ -23,6 +27,12 @@ void ProgramContext::getContext(){
 
     if(this->argumentCount < MIN_ARGUMENTS_COUNT){
         throw std::invalid_argument("Error: Any argument was not provided!");
+    }
+
+    if(argumentCount == MIN_ARGUMENTS_COUNT && std::string(this->programArguments[1]) == "-h"){
+        this->context = HELP;
+        this->program = std::make_unique<Help>();
+        return;
     }
 
     // Parsed file pathfrom cmd input
@@ -55,14 +65,19 @@ void ProgramContext::getContext(){
         }
     }
 
+    // For Client mode conver server address
     std::variant<struct sockaddr_in, struct sockaddr_in6> ipvAddress;
-    int typeOfAddress = this->convertHostname(hostname, ipvAddress);
-
+    int typeOfAddress = AF_UNSPEC;
+    if(this->context == CLIENT){
+        typeOfAddress = this->convertHostname(hostname, ipvAddress);
+    }
+    // Instantiate the program instance depending on the context
     switch (this->context){
-        case SERVER:{
+        case SERVER:{ // Server mode
+            this->program = std::make_unique<Server>();
             break;
         }
-        case CLIENT:{
+        case CLIENT:{ // Client mode
             if(typeOfAddress == AF_INET){
                 struct sockaddr_in serverAddr = std::get<struct sockaddr_in>(ipvAddress);
                 this->program = std::make_unique<Client>(serverAddr, file, typeOfAddress);
