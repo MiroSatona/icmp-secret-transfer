@@ -1,7 +1,7 @@
 /**
  * @file decryptor.hpp
  * @author Martin Zůbek
- * @date 2025-11-01
+ * @date 2025-10-16
  * @brief Header file with definition of Decryptor class. This class is responsible for decrypting data.
  */
 
@@ -17,7 +17,7 @@
  * @class Decryptor
  * @brief Class responsible for decrypting data using AES decryption.
  */
-class Decryptor : public InterfaceDecryptor {
+class Decryptor : public AbstractCipher {
     public:
         /**
          * @brief Constructor of Decryptor class.
@@ -29,7 +29,7 @@ class Decryptor : public InterfaceDecryptor {
          * @throw std::runtime_error If any error was reached during the decryption.
          * @return std::string Decrypted data.
          */
-        std::string decrypt(CHIPHER_T dataToDecrypt) override;
+        std::string decrypt(CHIPHER_T dataToDecrypt);
 };
 
 #endif // DECRYPTOR_HPP

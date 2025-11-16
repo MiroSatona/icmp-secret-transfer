@@ -18,9 +18,14 @@
 #include "../../inc/types/struct_cipher.hpp"
 
 // Constructor of the Decryptor class
-Decryptor::Decryptor() : InterfaceDecryptor() {}
+Decryptor::Decryptor() : AbstractCipher() {}
 
+/**
+ * @note This implementation was inspired by the OpenSSL tutorial:
+ *       https://wiki.openssl.org/index.php/EVP_Symmetric_Encryption_and_Decryption
+ */
 std::string Decryptor::decrypt(CHIPHER_T dataToDecrypt){
+
     // Create a context for the decryption
 	EVP_CIPHER_CTX *cipherContext;
     memset(&cipherContext, 0, sizeof(cipherContext));
@@ -59,7 +64,7 @@ std::string Decryptor::decrypt(CHIPHER_T dataToDecrypt){
     // Calculate total length of decrypted data
     int totalLen = outLengthDecrypt + finalBlockLength;
 
-    
+    // Clean up and return decrypted data
     EVP_CIPHER_CTX_free(cipherContext);
     return std::string((char*)decryptedData, totalLen);
 }
