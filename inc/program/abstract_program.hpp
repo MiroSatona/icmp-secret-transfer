@@ -10,16 +10,16 @@
 #define ABSTRACT_PROGRAM_HPP
 
 #include <iostream>
-#include <memory>
-
 /**
  * @class AbstractProgram
  * @brief Class define the abstract class for the class Client in the [src|inc]/program/client.[cpp|hpp] and class Serever in the [src|inc]/program/server.[cpp|hpp].
  */
 class AbstractProgram {
-    protected:
-        
     public:
+        /**
+         * @brief Default constructor of AbstractProgram.
+         */
+        AbstractProgram() = default;       
         /**
          * @brief Virtual destructor.
          */
@@ -27,7 +27,7 @@ class AbstractProgram {
         /**
          * @brief Virtual method, wich will be implemented in the derived classes Client and Server.
          */
-        virtual void run() const = 0;
+        virtual void run() = 0;
 };
 
 #endif // ABSTRACT_PROGRAM_HPP
