@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
         ProgramContext context = ProgramContext(argc, argv);
         // Get the context of the program by method getContext whats independent on the provided arguments form cmd line
         context.getContext();
-        // Get the program instance, the instance will be client or server instance
+        // Get the program instance, the instance will be client, server or help instance
         std::unique_ptr<AbstractProgram>& program = context.getProgram();
         // Run the program
         program->run();
