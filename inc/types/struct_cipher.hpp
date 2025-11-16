@@ -10,7 +10,7 @@
 
 
 // Maximum size of data to send
-#define  MAX_DATA_SIZE 1376
+#define  MAX_DATA_SIZE 1392
 
 #include <iostream>
 #include <string>
