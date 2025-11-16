@@ -4,7 +4,6 @@
  * @date 2025-10-16
  * @brief Header file with definition of AbstractCipher class. This class is an abstract class for 
  * Encryptor in the [src|inc]/cipher/encryptor.[cpp|hpp] and Decryptor in the [src|inc]/cipher/decryptor.[cpp|hpp].
- * This file also contains interfaces InterfaceEncryptor and InterfaceDecryptor for polymorphic behavior
  */
 #ifndef ABSTRACT_CIPHER_HPP
 #define ABSTRACT_CIPHER_HPP
@@ -36,42 +35,6 @@ class AbstractCipher {
          * @brief Virtual destructor.
          */
         virtual ~AbstractCipher() = default;
-};
-
-/**
- * @interface InterfaceEncryptor
- * @brief Interface for Encryptor class.
- */
-class InterfaceEncryptor : public AbstractCipher {
-    public:
-        /**
-         * @brief Virtual method for encrypt the provided data.
-         * @param dataToEncrypt Data which will be encrypted.
-         * @return CHIPHER_T struct with metadata(padding,..) and cipher data. See in inc/types/struct_cipher.hpp.
-         */
-        virtual CHIPHER_T encrypt(unsigned char *dataToEncrypt) = 0;
-        /**
-         * @brief Virtual destructor.
-         */
-        virtual ~InterfaceEncryptor() = default;
-};
-
-/**
- * @interface InterfaceDecryptor
- * @brief Interface for Decryptor class.
- */
-class InterfaceDecryptor : public AbstractCipher {
-    public:
-        /**
-         * @brief Virtual method for decrypt the provided data.
-         * @param dataToDecrypt Data which will be decrypted.
-         * @return std::string Decrypted data.
-         */
-        virtual std::string decrypt(CHIPHER_T dataToDecrypt) = 0;
-        /**
-         * @brief Virtual destructor.
-         */
-        virtual ~InterfaceDecryptor() = default;
 };
 
 #endif // ABSTRACT_CIPHER_HPP
