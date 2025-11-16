@@ -22,6 +22,8 @@ class FileReader: public AbstractFileHandler {
         std::string filePath;
         /// @brief Input file stream for reading data from the file.
         std::ifstream fileStream;
+        /// @brief Size of the last readed part.
+        size_t lastReadSize;
     public:
         /**
          * @brief Constructor of new FileReader class.
@@ -36,7 +38,13 @@ class FileReader: public AbstractFileHandler {
          * 
          * @return unsigned char* Readed data from the file.
          */
-        unsigned char* read();
+        unsigned char* read(size_t& outSize);
+        /**
+         * @brief Getter for size of the last readed part.
+         * 
+         * @return size_t Size of the last part readed data.
+         */
+        size_t getLastReadSize();
         /**
          * @brief Method for closing the ifstream.
          */
