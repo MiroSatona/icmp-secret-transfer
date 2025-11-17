@@ -85,7 +85,13 @@ ssize_t Server::sendMessageToClient(MESSAGE_TYPES msgType){
     // Size of the created message
     size_t messageSize = 0;
     // Create message to the client without data
-    unsigned char *messageToClient = this->messageCreator->createMessageWithNoData(this->actualIdentifier, this->actualSequenceNumber, msgType, messageSize, ICMP_ECHOREPLY, ICMP6_ECHO_REPLY);
+    unsigned char *messageToClient = nullptr;
+    if(msgType == MESSAGE_TYPES::FIN || msgType == MESSAGE_TYPES::FIN_ERR){
+        messageToClient = this->messageCreator->createMessageWithNoData(this->actualIdentifier, this->actualSequenceNumber, msgType, messageSize, ICMP_ECHO, ICMP6_ECHO_REQUEST);
+    } else {
+        messageToClient = this->messageCreator->createMessageWithNoData(this->actualIdentifier, this->actualSequenceNumber, msgType, messageSize, ICMP_ECHOREPLY, ICMP6_ECHO_REPLY);
+    }
+    
 
     // Send the message to the client
     ssize_t sendedBytes = -1;
@@ -453,11 +459,11 @@ void Server::handleTerminateSession(){
 }
 
 void Server::handleEndingState(){
-    // Send FIN_ACK to the client to acknowledge termination and move to listening state
-    this->sendMessageToClient(MESSAGE_TYPES::FIN_ACK);
+    // Send FIN_ERR to the client if connected
+    if(this->state != SERVER_STATE::LISTENING_STATE){
+        this->sendMessageToClient(MESSAGE_TYPES::FIN_ERR);
+    }
     this->actualSequenceNumber = 0;
     this->actualIdentifier = 0;
-    this->fileWriter->closeStream();
-    this->state = SERVER_STATE::LISTENING_STATE;
 }
 
