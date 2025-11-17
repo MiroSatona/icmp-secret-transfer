@@ -81,28 +81,23 @@ void Client::run(){
         while(this->state != CLIENT_STATE::FIN_STATE) {
             switch(this->state) {
                 case CLIENT_STATE::AUTH_STATE:{ // Authentication state
-                    std::cerr << "AUTH_STATE" << std::endl;
                     this->handleAuthState();
                     break;
                 }
                 case CLIENT_STATE::WAIT_STATE:{ // Wait state
-                    std::cerr << "WAIT_STATE" << std::endl;
                     this->handleWaitState();
                     break;
                 }
                 case CLIENT_STATE::SENDING_STATE:{ // Sending state
-                    std::cerr << "SENDING_STATE" << std::endl;
                     this->handleSendingState();
                     break;
                 }
                 case CLIENT_STATE::SERVER_ERROR_STATE:{ // Server error state
-                    std::cerr << "SERVER_ERROR_STATE" << std::endl;
                     throw std::logic_error("Error: Server-side error during file transfer!");
                     break;
                 }
                 
                 default:{ // Unknown state
-                    std::cerr << "UNKNOWN_STATE" << std::endl;
                     throw std::runtime_error("Error: Internal error in the client logic!");
                 }
             }
