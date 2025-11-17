@@ -208,7 +208,6 @@ void Client::handleWaitState(){
     
     // Check if maximum authentication retries reached
     if(this->retryAuth == MAX_AUTH_RETRIES){
-        std::cerr << "Erorr: Client can not be authenticate!" << std::endl;
         throw std::runtime_error("Error: Client can not be authenticate!");
     }
 
