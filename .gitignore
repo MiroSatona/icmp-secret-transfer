@@ -2,3 +2,5 @@ obj/
 secret
 .vscode/
 test.txt
+tests/_tmp/
+
