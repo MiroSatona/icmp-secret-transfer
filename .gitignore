@@ -3,4 +3,5 @@ secret
 .vscode/
 test.txt
 tests/_tmp/
+*.zip
 

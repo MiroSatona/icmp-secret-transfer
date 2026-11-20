@@ -14,8 +14,8 @@
 
 // Encryption/decryption key
 #define LOGIN_KEY "xlogin0"
-// Size of the encryption/decryption key
-#define LOGIN_KEY_SIZE 7
+// Size of the encryption/decryption key (without the terminating null byte)
+#define LOGIN_KEY_SIZE (sizeof(LOGIN_KEY) - 1)
 // Size of the hashed key
 #define KEY_SIZE_BYTES 32
 /**

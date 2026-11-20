@@ -22,6 +22,10 @@ and the man page is in [secret.1](secret.1).
   [inc/cipher/abstract_cipher.hpp](inc/cipher/abstract_cipher.hpp)). The client and
   the server must be built with the same value.
 
+> **Note:** This is a school project, not a security tool. The key is compiled into
+> the binary, so anyone with the source code can decrypt the transfer. Do not use it
+> to send sensitive data.
+
 ## Requirements
 
 - Linux
@@ -34,7 +38,7 @@ and the man page is in [secret.1](secret.1).
 
 ```sh
 make          # builds the ./secret binary
-make clean    # removes object files, the binary and temporary test files
+make clean    # removes object files, the binary, the zip archive and temporary test files
 ```
 
 ## Usage

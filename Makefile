@@ -67,8 +67,12 @@ test: $(PROG)
 zip:
 	@zip -r $(PROG).zip $(SRC_DIR) $(INC_DIR) $(TEST_DIR) $(LICENSE) $(MAKEFILE) $(MANUAL) $(README) $(MAN_PAGE)	
 
-# Clean executable file, object files and temporary test files (uses sudo when not run as root)
+# Clean executable file, object files, zip archive and temporary test files (uses sudo when not run as root)
 clean:
-	@sudo rm -rf $(OBJ_DIR) $(PROG) $(TEST_DIR)/_tmp
+	@if [ "$$(id -u)" -eq 0 ]; then \
+		rm -rf $(OBJ_DIR) $(PROG) $(PROG).zip $(TEST_DIR)/_tmp; \
+	else \
+		sudo rm -rf $(OBJ_DIR) $(PROG) $(PROG).zip $(TEST_DIR)/_tmp; \
+	fi
 
 .PHONY: test clean zip
