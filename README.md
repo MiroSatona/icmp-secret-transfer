@@ -134,7 +134,7 @@ inc/                      header files
 src/                      implementation of the classes, main.cpp
 tests/run_test.sh         test script
 secret.1                  man page
-manual.pdf                full documentation (Czech)
+manual.pdf                full documentation
 ```
 
 ## Tests
