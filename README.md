@@ -7,8 +7,8 @@ both **IPv4 and IPv6**.
 
 This is a school project for the **ISA** course (Network Applications and Network
 Administration) at the Faculty of Information Technology, Brno University of
-Technology (BUT FIT), 2025. The full documentation (in Czech) is in
-[manual.pdf](manual.pdf), and the man page is in [secret.1](secret.1).
+Technology (BUT FIT), 2025. The full documentation is in [manual.pdf](manual.pdf), 
+and the man page is in [secret.1](secret.1).
 
 ## How it works
 
